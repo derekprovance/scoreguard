@@ -1,6 +1,8 @@
 class MiscTasksController < ApplicationController
   before_action :set_misc_task, only: [:show, :edit, :update, :destroy]
 
+  attr_accessor :current
+
   # GET /misc_tasks
   # GET /misc_tasks.json
   def index
@@ -19,10 +21,6 @@ class MiscTasksController < ApplicationController
 
   # GET /misc_tasks/1/edit
   def edit
-  end
-
-  # GET /misc_tasks/1/increment
-  def increment
   end
 
   # POST /misc_tasks
@@ -64,6 +62,14 @@ class MiscTasksController < ApplicationController
       format.html { redirect_to '/misc_tasks', notice: 'Misc Task was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def earned_misc_points
+    MiscTask.where(user_id: current.id).first.try(:actual_points) || 0
+  end
+
+  def total_misc_points
+    MiscTask.where(user_id: current.id).first.try(:total_points) || 0
   end
 
   private
