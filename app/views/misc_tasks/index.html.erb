@@ -1,0 +1,10 @@
+<h1>Misc Tasks</h1>
+
+<p>Current active tasks:</p>
+<% @misc_tasks.each do |task| %>
+  <%= task.name %>(<%= task.actual_points %>/<%= task.total_points %>)
+  <%= link_to 'Edit', "/misc_tasks/#{task.id}/edit" %> -
+  <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %><br />
+<% end %>
+<br />
+<%= link_to 'Add Task', '/misc_tasks/new' %>

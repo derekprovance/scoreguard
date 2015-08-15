@@ -1,0 +1,27 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: score_dev
+  pool: 5
+  username: dprovance
+  password: ykyusdeu
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: score_test
+  pool: 5
+  username: dprovance
+  password: ykyusdeu
+
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: score
+  pool: 5
+  username: dprovance
+  password: ykyusdeu

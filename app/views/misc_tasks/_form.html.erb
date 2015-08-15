@@ -1,0 +1,31 @@
+<%= form_for(@misc_tasks) do |f| %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :earned_points %><br>
+    <%= f.number_field :actual_points %>
+  </div>
+
+  <div class="field">
+    <%= f.label :total_points %><br>
+    <%= f.number_field :total_points %>
+  </div>
+
+  <div class="field">
+    <%= f.label :weight %><br>
+    <%= f.number_field :weight %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

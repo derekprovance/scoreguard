@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  created_on: 2015-08-12
+  score: 9.99
+  goal: 1
+  total_points: 1
+  comments: MyString
+
+two:
+  created_on: 2015-08-12
+  score: 9.99
+  goal: 1
+  total_points: 1
+  comments: MyString
