@@ -10,7 +10,7 @@ class GpaCalculator < ApplicationController
 
     # TODO - need to find a way to passively update trello without a massive amount of spamming
     # TODO - need to remove or clean up all of these variable assignments
-    # update_trello
+    update_trello
     update_calendar
 
     # Total Points Calculations
@@ -34,19 +34,21 @@ class GpaCalculator < ApplicationController
     end
   end
 
-  def update_trello
-    Thread.new do
-      # TODO - Need to setup limit for trello requests
-      trello = TrelloApi.new
-      @trello_earned_points = trello.get_earned_value
-      @trello_total_points = trello.get_total_value
+  def update_trello(force=false)
+    # Thread.new do
+      trello = Apis::TrelloApi.new(@current_user)
 
-      if @trello_earned_points || @trello_total_points
-        current_grade.trello_earned_points = @trello_earned_points
-        current_grade.trello_total_points = @trello_total_points
-        current_grade.save!
+      if trello.api.get_last_updated > DateTime.now + 1.hour || force == true
+        @trello_earned_points = trello.get_earned_value
+        @trello_total_points = trello.get_total_value
+
+        if @trello_earned_points || @trello_total_points
+          current_grade.trello_earned_points = @trello_earned_points
+          current_grade.trello_total_points = @trello_total_points
+          current_grade.save!
+        end
       end
-    end
+    # end
   end
 
   def update_calendar

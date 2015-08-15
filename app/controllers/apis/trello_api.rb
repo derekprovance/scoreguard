@@ -1,13 +1,18 @@
-class TrelloApi
+class Apis::TrelloApi
+
+  attr_accessor :current_user, :api
+
+  def initialize(current_user)
+    @current_user = current_user
+    @api = TrelloApiController.new(current_user)
+  end
 
   def get_boards
-    trello_init
-    # derek = Trello::Member.find("derekprovance1")
-    # war_room = Trello::Board.find("52d41c3c5e6ec6027b917c6d")
-    # TODO - Automatically find and store List IDs
-    @goals ||= Trello::List.find("52e68c30b5276d1b500efba1")
-    @bonus ||= Trello::List.find("548532b7158b03e693f4aa64")
-    @accomplished ||= Trello::List.find("538dfcf098249c145d2ef179")
+    war_room = trello_init
+
+    @goals ||= war_room.lists.select{ |x| x.name == 'Goals for this week' }.first
+    @bonus ||= war_room.lists.select{ |x| x.name == 'Bonus Round' }.first
+    @accomplished ||= war_room.lists.select{ |x| x.name == 'Accomplished this Week!' }.first
   end
 
   def get_total_value
@@ -26,10 +31,13 @@ class TrelloApi
 
   def trello_init
     # TODO - Store API keys
+
     Trello.configure do |config|
-      config.developer_public_key ||= '8ffdd706d5db9f282d059937a6b479e4' # The "key" from step 1
-      config.member_token ||= '993b764ed44751dc501aa68f0b041d48501e6bb19fffbf4f1043586691adb7e8' # The token from step 3.
+      config.developer_public_key ||= api.api_keys['public_key']
+      config.member_token ||= api.api_keys['member_token']
     end
+
+    Trello::Board.find(api.api_keys['points_board'])
   end
 
   def card_points(column)
