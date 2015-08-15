@@ -1,7 +1,7 @@
 <h1>Score Tracker</h1><br />
 <div class="row">
-  <div class="col-md-4"><div class="well">Trello: <%= @gpa.trello_earned_points %> / <%= @gpa.trello_total_points %> (<%= @trello_percentage %>%)</div></div>
-  <div class="col-md-4"><div class="well">Calendar: <%= @gpa.calendar_earned_points %> / <%= @gpa.calendar_total_points %> (<%= @calendar_percentage %>%)</div></div>
+  <div class="col-md-4"><div class="well">Trello: <%= @gpa.current_grade.trello_earned_points %> / <%= @gpa.current_grade.trello_total_points %> (<%= @trello_percentage %>%)</div></div>
+  <div class="col-md-4"><div class="well">Calendar: <%= @gpa.current_grade.calendar_earned_points %> / <%= @gpa.current_grade.calendar_total_points %> (<%= @calendar_percentage %>%)</div></div>
   <div class="col-md-4"><div class="well">Tasks: <%= @gpa.misc_tasks.earned_misc_points %> / <%= @gpa.misc_tasks.total_misc_points %> (<%= @misc_task_percentage %>%)</div></div>
 </div>
 <br />

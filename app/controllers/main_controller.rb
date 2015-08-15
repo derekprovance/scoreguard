@@ -11,11 +11,11 @@ class MainController < ApplicationController
   end
 
   def get_trello_percentage
-    format_nan_zero(((@gpa.trello_earned_points / @gpa.trello_total_points.to_f) * 100).round(2))
+    format_nan_zero(((@gpa.current_grade.trello_earned_points / @gpa.current_grade.trello_total_points.to_f) * 100).round(2))
   end
 
   def get_calendar_percentage
-    format_nan_zero(((@gpa.calendar_earned_points / @gpa.calendar_total_points.to_f) * 100).round(2))
+    format_nan_zero(((@gpa.current_grade.calendar_earned_points / @gpa.current_grade.calendar_total_points.to_f) * 100).round(2))
   end
 
   def get_misc_task_percentage
