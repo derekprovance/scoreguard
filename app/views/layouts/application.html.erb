@@ -38,7 +38,7 @@
   </head>
   <body>
 
-    <div class="navbar navbar-default navbar-static-top">
+    <!-- <div class="navbar navbar-default navbar-static-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
@@ -53,17 +53,54 @@
             <li><%= link_to "Analytics", "/analytics" %></li>
           </ul>
         </div>
+        <div class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            Logged in as <strong><%= current_user.email %></strong>.
+            <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+          <% else %>
+            <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+          <% end %>
+        </div>
       </div>
-    </div>
+    </div> -->
 
-    <% if user_signed_in? %>
-      Logged in as <strong><%= current_user.email %></strong>.
-      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-    <% else %>
-      <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-      <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-    <% end %>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ScoreGuard</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><%= link_to "Calendar", "/goals"  %></li>
+              <li><%= link_to "Misc Tasks", "/misc_tasks"  %></li>
+              <li><%= link_to "Analytics", "/analytics" %></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <% if user_signed_in? %>
+                <li><div class="navbar-text">Welcome <strong><%= current_user.email %></strong></div></li>
+                <li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %></li>
+                <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+              <% else %>
+                <li><%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %></li>
+                <li><%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %></li>
+              <% end %>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </div>
+    </nav>
 
     <div class="container">
       <div class="row">
@@ -74,15 +111,17 @@
           <% if alert %>
             <p class="alert alert-danger"><%= alert %></p>
           <% end %>
-          <%= bootstrap_flash %>
+          <!-- <%= bootstrap_flash %> -->
           <%= yield %>
         </div>
+
         <div class="col-lg-3">
           <div class="well sidebar-nav">
             <h3>Current GPA</h3>
             <%= @gpa.try(:grade_percentage) %>%
           </div><!--/.well -->
         </div><!--/span-->
+
       </div><!--/row-->
 
       <footer>
