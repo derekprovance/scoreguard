@@ -1,4 +1,5 @@
 class MiscTask < ActiveRecord::Base
+  attr_accessor :current_user
 
   def total_misc_points
     get_tasks.collect{ |task| task.weight * task.total_points }.sum
@@ -11,7 +12,7 @@ class MiscTask < ActiveRecord::Base
   private
 
   def get_tasks
-    @tasks ||= MiscTask.all
+    @tasks ||= MiscTask.where(user_id: current_user.id)
   end
 
 end

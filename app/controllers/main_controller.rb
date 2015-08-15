@@ -3,7 +3,7 @@ require 'google_calendar'
 
 class MainController < ApplicationController
   def index
-    @gpa = GpaCalculator.new
+    @gpa = GpaCalculator.new(current_user)
 
     @trello_percentage = get_trello_percentage
     @calendar_percentage = get_calendar_percentage

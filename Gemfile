@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'ruby-trello'
 gem 'google_calendar'
+gem 'devise'
 
 gem "therubyracer"
 gem "less-rails"

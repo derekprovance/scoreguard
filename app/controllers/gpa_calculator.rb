@@ -2,18 +2,39 @@ class GpaCalculator < ApplicationController
 
   attr_accessor :total_points, :earned_points, :grade_percentage, :misc_tasks, :current_grade
 
-  def initialize
+  def initialize(current_user)
     @misc_tasks ||= MiscTask.new
     @grades ||= Grade.new
 
+    # TODO - need to remove these assignments below. The assignments are shameful and need replaced
+    @misc_tasks.current_user = current_user
+    @grades.current_user = current_user
+
     @current_grade = @grades.obtain_grade_points
 
+    # TODO - need to find a way to passively update trello without a massive amount of spamming
+    # TODO - need to remove or clean up all of these variable assignments
     # update_trello
     update_calendar
     # Total Points Calculations
     @total_points = calculate_total_points
     @earned_points = calculate_total_earned_points
     @grade_percentage = calculate_grade_percentage
+  end
+
+  def create
+    @grades = Grade.new(grade_params)
+    @grades.user_id = current_user.id
+
+    respond_to do |format|
+      if @grades.save
+        format.html { redirect_to @grades, notice: 'Goal was successfully created.' }
+        format.json { render :show, status: :created, location: @goal }
+      else
+        format.html { render :new }
+        format.json { render json: @grades.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update_trello

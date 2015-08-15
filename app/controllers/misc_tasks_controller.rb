@@ -4,7 +4,7 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks
   # GET /misc_tasks.json
   def index
-    @misc_tasks = MiscTask.all
+    @misc_tasks = MiscTask.where(user_id: current_user.id)
   end
 
   # GET /misc_tasks/1
@@ -29,6 +29,7 @@ class MiscTasksController < ApplicationController
   # POST /misc_tasks.json
   def create
     @misc_tasks = MiscTask.new(misc_task_params)
+    @misc_tasks.user_id = current_user.id
 
     respond_to do |format|
       if @misc_tasks.save

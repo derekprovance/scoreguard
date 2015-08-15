@@ -4,7 +4,7 @@ class GoalsController < ApplicationController
   # GET /goals
   # GET /goals.json
   def index
-    @goals = Goal.all
+    @goals = Goal.where(user_id: current_user.id)
   end
 
   # GET /goals/1
@@ -25,6 +25,7 @@ class GoalsController < ApplicationController
   # POST /goals.json
   def create
     @goal = Goal.new(goal_params)
+    @goal.user_id = current_user.id
 
     respond_to do |format|
       if @goal.save
@@ -59,12 +60,6 @@ class GoalsController < ApplicationController
       format.html { redirect_to goals_url, notice: 'Goal was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def self.obtain_events_current_week
-    # TODO - add the ability to fail events here
-    start_date = Date.current.beginning_of_week
-    @goal = Goal.where(starts_at: start_date..start_date+7.days)
   end
 
   private
