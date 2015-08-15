@@ -21,7 +21,7 @@ class MainController < ApplicationController
   end
 
   def get_misc_task_percentage
-    format_nan_zero(((@misc_tasks.earned_misc_points / @misc_tasks.total_misc_points.to_f) * 100).round(2))
+    format_nan_zero(((@gpa.current_grade.misc_earned_points / @gpa.current_grade.misc_total_points.to_f) * 100).round(2))
   end
 
   def format_nan_zero(percentage)

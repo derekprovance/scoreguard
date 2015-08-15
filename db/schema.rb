@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815205806) do
+ActiveRecord::Schema.define(version: 20150815230155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20150815205806) do
     t.integer  "calendar_earned_points"
     t.integer  "calendar_total_points"
     t.integer  "user_id"
+    t.integer  "misc_earned_points"
+    t.integer  "misc_total_points"
   end
 
   create_table "misc_tasks", force: :cascade do |t|

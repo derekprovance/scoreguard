@@ -64,14 +64,6 @@ class MiscTasksController < ApplicationController
     end
   end
 
-  def earned_misc_points
-    MiscTask.where(user_id: current.id).first.try(:actual_points) || 0
-  end
-
-  def total_misc_points
-    MiscTask.where(user_id: current.id).first.try(:total_points) || 0
-  end
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_misc_task

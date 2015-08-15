@@ -8,10 +8,9 @@ class GpaCalculator < ApplicationController
     @current_grade = @grades.obtain_grade_points(current_user)
     @current_user = current_user
 
-    # TODO - need to find a way to passively update trello without a massive amount of spamming
-    # TODO - need to remove or clean up all of these variable assignments
-    update_trello
+    update_trello unless AppApi.where(name: 'trello').where(user_id: current_user.id)
     update_calendar
+    update_misc
 
     # Total Points Calculations
     @total_points = calculate_total_points
@@ -38,7 +37,7 @@ class GpaCalculator < ApplicationController
     # Thread.new do
       trello = Apis::TrelloApi.new(@current_user)
 
-      if trello.api.get_last_updated > DateTime.now + 1.hour || force == true
+      if trello.api.get_last_updated > DateTime.now + 30.minutes || force == true
         @trello_earned_points = trello.get_earned_value
         @trello_total_points = trello.get_total_value
 
@@ -53,19 +52,24 @@ class GpaCalculator < ApplicationController
 
   def update_calendar
     start_date = Date.current.beginning_of_week
-    @calendar_earned_points = Goal.where(starts_at: start_date..start_date+7.days).where(missed: false).where(user_id: current_user.id).size
-    @calendar_total_points = Goal.where(starts_at: start_date..start_date+7.days).where(user_id: current_user.id).size
-    current_grade.calendar_earned_points = @calendar_earned_points
-    current_grade.calendar_total_points = @calendar_total_points
+    current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+7.days).where(missed: false).where(user_id: current_user.id).size
+    current_grade.calendar_total_points = Goal.where(starts_at: start_date..start_date+7.days).where(user_id: current_user.id).size
+    current_grade.save!
+  end
+
+  def update_misc
+    start_date = Date.current.beginning_of_week
+    current_grade.misc_earned_points = MiscTask.where(created_at: start_date..start_date+7.days).where(user_id: current_user.id).sum(:actual_points)
+    current_grade.misc_total_points = MiscTask.where(created_at: start_date..start_date+7.days).where(user_id: current_user.id).sum(:total_points)
     current_grade.save!
   end
 
   def calculate_total_earned_points
-    @current_grade.trello_earned_points + @current_grade.calendar_earned_points + 0
+    @current_grade.trello_earned_points + @current_grade.calendar_earned_points + @current_grade.misc_earned_points
   end
 
   def calculate_total_points
-    @current_grade.trello_total_points + @current_grade.calendar_total_points + 0
+    @current_grade.trello_total_points + @current_grade.calendar_total_points + @current_grade.misc_total_points
   end
 
   def calculate_grade_percentage
