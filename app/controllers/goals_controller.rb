@@ -2,6 +2,8 @@ class GoalsController < ApplicationController
   before_action :set_goal, only: [:show, :edit, :update, :destroy]
 
   # TODO - Reoccuring calendar events
+  # TODO - Calendar select input field
+  # TODO - Non-Event Day Penalty
 
   # GET /goals
   # GET /goals.json

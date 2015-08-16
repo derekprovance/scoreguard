@@ -55,15 +55,15 @@ class GpaCalculator < ApplicationController
   # TODO - Need to store actual points in addition to weighted points
   def update_calendar
     start_date = Date.current.beginning_of_week
-    current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+7.days).where(missed: false).where(user_id: current_user.id).sum(:weight)
-    current_grade.calendar_total_points = Goal.where(starts_at: start_date..start_date+7.days).where(user_id: current_user.id).sum(:weight)
+    current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+6.days).where(missed: false).where(user_id: current_user.id).sum(:weight)
+    current_grade.calendar_total_points = Goal.where(starts_at: start_date..start_date+6.days).where(user_id: current_user.id).sum(:weight)
     current_grade.save!
   end
 
   def update_misc
     start_date = Date.current.beginning_of_week
-    current_grade.misc_earned_points = MiscTask.where(created_at: start_date..start_date+7.days).where(user_id: current_user.id).map{ |misc| misc.actual_points * misc.weight }.sum
-    current_grade.misc_total_points = MiscTask.where(created_at: start_date..start_date+7.days).where(user_id: current_user.id).map{ |misc| misc.total_points * misc.weight }.sum
+    current_grade.misc_earned_points = MiscTask.where(created_at: start_date..start_date+6.days).where(user_id: current_user.id).map{ |misc| misc.actual_points * misc.weight }.sum
+    current_grade.misc_total_points = MiscTask.where(created_at: start_date..start_date+6.days).where(user_id: current_user.id).map{ |misc| misc.total_points * misc.weight }.sum
     current_grade.save!
   end
 
