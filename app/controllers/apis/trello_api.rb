@@ -45,9 +45,9 @@ class Apis::TrelloApi
       if card.labels.select{ |l| l.name == 'Easy' }.size > 0
         values[:easy] += 1
       elsif card.labels.select{ |l| l.name == 'Medium' }.size > 0
-        values[:medium] += 1
+        values[:medium] += 2
       elsif card.labels.select{ |l| l.name == 'Hard' }.size > 0
-        values[:hard] += 1
+        values[:hard] += 3
       elsif card.labels.select{ |l| l.name == 'Bonus' }.size > 0
         values[:bonus] += 1
       end
