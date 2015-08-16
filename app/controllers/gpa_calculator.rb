@@ -52,6 +52,7 @@ class GpaCalculator < ApplicationController
     # end
   end
 
+  # TODO - Need to store actual points in addition to weighted points
   def update_calendar
     start_date = Date.current.beginning_of_week
     current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+7.days).where(missed: false).where(user_id: current_user.id).sum(:weight)

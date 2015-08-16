@@ -1,6 +1,8 @@
 class GoalsController < ApplicationController
   before_action :set_goal, only: [:show, :edit, :update, :destroy]
 
+  # TODO - Reoccuring calendar events
+
   # GET /goals
   # GET /goals.json
   def index

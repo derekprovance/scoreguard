@@ -1,6 +1,9 @@
 class MiscTasksController < ApplicationController
   before_action :set_misc_task, only: [:show, :edit, :update, :destroy]
 
+  # TODO - Need to implement method to reset the misc tasks to zero
+  # TODO - Need to implement some kind of category feature
+
   attr_accessor :current
 
   # GET /misc_tasks
