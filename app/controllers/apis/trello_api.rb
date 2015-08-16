@@ -1,10 +1,14 @@
 class Apis::TrelloApi
 
-  attr_accessor :current_user, :api
+  attr_accessor :current_user, :api_keys
 
   def initialize(current_user)
     @current_user = current_user
-    @api = TrelloApiController.new(current_user)
+
+    @api_keys = get_api_keys
+    if @api_keys.nil?
+      set_api_keys
+    end
   end
 
   def get_boards
@@ -27,15 +31,37 @@ class Apis::TrelloApi
     earned_values[:easy] + earned_values[:medium] + earned_values[:hard] + earned_values[:bonus]
   end
 
+  def is_setup?
+    AppApi.where(user_id: @current_user.id).any?
+  end
+
+  def get_last_updated
+    AppApi.where(user_id: @current_user.id).first.try(:last_updated)
+  end
+
+  def get_last_updated=(new_date)
+    api = AppApi.where(user_id: @current_user.id).first
+    api.last_updated = new_date
+    api.save!
+  end
+
+  def get_api_keys
+    AppApi.where(user_id: @current_user.id).first.try(:api_keys)
+  end
+
+  def set_api_keys
+    # TODO - need to implement this function
+  end
+
   private
 
   def trello_init
     Trello.configure do |config|
-      config.developer_public_key ||= api.api_keys['public_key']
-      config.member_token ||= api.api_keys['member_token']
+      config.developer_public_key ||= api_keys['public_key']
+      config.member_token ||= api_keys['member_token']
     end
 
-    Trello::Board.find(api.api_keys['points_board'])
+    Trello::Board.find(api_keys['points_board'])
   end
 
   def card_points(column)

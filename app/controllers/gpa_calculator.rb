@@ -38,10 +38,10 @@ class GpaCalculator < ApplicationController
     # Thread.new do
       trello = Apis::TrelloApi.new(@current_user)
 
-      if trello.api.get_last_updated + 15.minutes < Time.now.in_time_zone("UTC") || force == true
+      if update_trello?(trello, force)
         @trello_earned_points = trello.get_earned_value
         @trello_total_points = trello.get_total_value
-        trello.api.get_last_updated = Time.now.in_time_zone("UTC")
+        trello.get_last_updated = Time.now.in_time_zone("UTC")
 
         if @trello_earned_points || @trello_total_points
           current_grade.trello_earned_points = @trello_earned_points
@@ -50,6 +50,11 @@ class GpaCalculator < ApplicationController
         end
       end
     # end
+  end
+
+  def update_trello?(api, force)
+    return if api.get_last_updated.nil?
+    api.get_last_updated + 15.minutes < Time.now.in_time_zone("UTC") || force == true
   end
 
   # TODO - Need to store actual points in addition to weighted points
