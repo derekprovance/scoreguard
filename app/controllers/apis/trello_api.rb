@@ -30,8 +30,6 @@ class Apis::TrelloApi
   private
 
   def trello_init
-    # TODO - Store API keys
-
     Trello.configure do |config|
       config.developer_public_key ||= api.api_keys['public_key']
       config.member_token ||= api.api_keys['member_token']
