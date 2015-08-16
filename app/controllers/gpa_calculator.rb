@@ -38,7 +38,7 @@ class GpaCalculator < ApplicationController
     # Thread.new do
       trello = Apis::TrelloApi.new(@current_user)
 
-      if trello.api.get_last_updated + 30.minutes < Time.now.in_time_zone("UTC") || force == true
+      if trello.api.get_last_updated + 15.minutes < Time.now.in_time_zone("UTC") || force == true
         @trello_earned_points = trello.get_earned_value
         @trello_total_points = trello.get_total_value
         trello.api.get_last_updated = Time.now.in_time_zone("UTC")
