@@ -13,6 +13,12 @@ class TrelloApiController < ApplicationController
     AppApi.where(user_id: @user_id).first.try(:last_updated)
   end
 
+  def get_last_updated=(new_date)
+    api = AppApi.where(user_id: @user_id).first
+    api.last_updated = new_date
+    api.save!
+  end
+
   def get_api_keys
     AppApi.where(user_id: @user_id).first.try(:api_keys)
   end

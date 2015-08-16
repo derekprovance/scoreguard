@@ -9,7 +9,7 @@ class GpaCalculator < ApplicationController
     @current_user = current_user
 
     # Update the different APIs
-    update_trello if AppApi.where(name: 'trello').where(user_id: current_user.id).any?
+    update_trello
     update_calendar
     update_misc
 
@@ -38,9 +38,10 @@ class GpaCalculator < ApplicationController
     # Thread.new do
       trello = Apis::TrelloApi.new(@current_user)
 
-      if trello.api.get_last_updated > DateTime.now + 30.minutes || force == true
+      if trello.api.get_last_updated + 30.minutes < Time.now.in_time_zone("UTC") || force == true
         @trello_earned_points = trello.get_earned_value
         @trello_total_points = trello.get_total_value
+        trello.api.get_last_updated = Time.now.in_time_zone("UTC")
 
         if @trello_earned_points || @trello_total_points
           current_grade.trello_earned_points = @trello_earned_points
