@@ -8,6 +8,7 @@ class GpaCalculator < ApplicationController
     @current_grade = @grades.obtain_grade_points(current_user)
     @current_user = current_user
 
+    # Update the different APIs
     update_trello unless AppApi.where(name: 'trello').where(user_id: current_user.id)
     update_calendar
     update_misc
