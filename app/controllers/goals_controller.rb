@@ -2,13 +2,14 @@ class GoalsController < ApplicationController
   before_action :set_goal, only: [:show, :edit, :update, :destroy]
 
   # TODO - Reoccuring calendar events
-  # TODO - Calendar select input field
   # TODO - Non-Event Day Penalty
 
   # GET /goals
   # GET /goals.json
   def index
+    start_date = Date.current.beginning_of_week
     @goals = Goal.where(user_id: current_user.id)
+    @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days)
   end
 
   # GET /goals/1
@@ -30,6 +31,7 @@ class GoalsController < ApplicationController
   def create
     @goal = Goal.new(goal_params)
     @goal.user_id = current_user.id
+    @goal.starts_at = Date.strptime(goal_params['starts_at'], '%m/%d/%Y') unless goal_params['starts_at'].empty?
 
     respond_to do |format|
       if @goal.save

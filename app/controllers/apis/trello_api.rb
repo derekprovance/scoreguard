@@ -65,7 +65,6 @@ class Apis::TrelloApi
   end
 
   def card_points(column)
-    # TODO - need to reconfigure bonus point calculations for .size
     values = { easy: 0, medium: 0, hard: 0, bonus: 0 }
 
     column.cards.each do |card|
