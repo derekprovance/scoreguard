@@ -67,8 +67,8 @@ class GpaCalculator < ApplicationController
 
   def update_misc
     start_date = Date.current.beginning_of_week
-    current_grade.misc_earned_points = MiscTask.where(created_at: start_date..start_date+6.days).where(user_id: current_user.id).map{ |misc| misc.actual_points * misc.weight }.sum
-    current_grade.misc_total_points = MiscTask.where(created_at: start_date..start_date+6.days).where(user_id: current_user.id).map{ |misc| misc.total_points * misc.weight }.sum
+    current_grade.misc_earned_points = MiscTask.where(user_id: current_user.id).map{ |misc| misc.actual_points * misc.weight }.sum
+    current_grade.misc_total_points = MiscTask.where(user_id: current_user.id).map{ |misc| misc.total_points * misc.weight }.sum
     current_grade.save!
   end
 
