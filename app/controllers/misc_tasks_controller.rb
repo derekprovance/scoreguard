@@ -3,7 +3,6 @@ class MiscTasksController < ApplicationController
 
   # TODO - Need to implement method to reset the misc tasks to zero
   # TODO - Need to implement some kind of category feature
-  # TODO - Setup form restrictions (Blank fields, Actual going past Total)
 
   attr_accessor :current
 

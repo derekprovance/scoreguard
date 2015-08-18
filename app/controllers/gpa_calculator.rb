@@ -1,6 +1,6 @@
 class GpaCalculator < ApplicationController
 
-  attr_accessor :total_points, :earned_points, :grade_percentage, :current_grade
+  attr_accessor :total_points, :earned_points, :current_grade
 
   def initialize(current_user)
     @grades ||= Grade.new
@@ -16,7 +16,6 @@ class GpaCalculator < ApplicationController
     # Total Points Calculations
     @total_points = calculate_total_points
     @earned_points = calculate_total_earned_points
-    @grade_percentage = calculate_grade_percentage
   end
 
   def create

@@ -1,10 +1,24 @@
-<h1>Misc Tasks</h1>
+<h1>Misc Tasks</h1><br />
 
-<p>Current active tasks:</p>
+<div class="container">
 <% @misc_tasks.each do |task| %>
-  <%= task.name %>(<%= task.actual_points %>/<%= task.total_points %>)
-  <%= link_to 'Edit', "/misc_tasks/#{task.id}/edit" %> -
-  <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %><br />
+  <div class="col-sm-4 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading"><b><%= task.name %></b> (<%= task.actual_points %>/<%= task.total_points %>)
+        <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-sm', :style => 'float: right' do %>
+          <i class="fa fa-times fa-lg"></i>
+        <% end %><div class="clearfix"></div>
+      </div>
+      <div class="panel-body">
+        <%= link_to 'Edit', "/misc_tasks/#{task.id}/edit", :class => 'btn btn-default btn-sm' %>
+      </div>
+    </div>
+  </div>
 <% end %>
-<br />
-<%= link_to 'Add Task', '/misc_tasks/new' %>
+</div>
+
+<div class="container">
+  <%= link_to '/misc_tasks/new', :class => 'btn btn-default' do %>
+    Add Task <span class="fa fa-plus" aria-hidden="true"></span>
+  <% end %>
+</div>

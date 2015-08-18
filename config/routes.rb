@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'main#index'
 
-  # get 'misc_tasks' => 'misc_tasks#index'
+  # get 'misc_tasks/increment' => 'misc_tasks#increment'
   # get 'misc_tasks/create' => 'misc_tasks#create'
 
   # Example of regular route:

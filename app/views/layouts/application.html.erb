@@ -107,7 +107,7 @@
     <div class="container">
       <% if user_signed_in? %>
         <div class="row">
-          <div class="col-lg-9">
+          <div class="col-lg-12">
             <% if notice %>
               <p class="alert alert-success"><%= notice %></p>
             <% end %>
@@ -117,12 +117,6 @@
             <!-- <%= bootstrap_flash %> -->
             <%= yield %>
           </div>
-            <div class="col-lg-3">
-              <div class="well sidebar-nav">
-                <h3>Current GPA</h3>
-                <%= @gpa.try(:grade_percentage) %>%
-              </div><!--/.well -->
-            </div><!--/span-->
         </div><!--/row-->
       <% else %>
         <div class="row">
@@ -132,7 +126,7 @@
         </div>
       <% end %>
 
-
+      <br />
       <footer>
         <p>Derek Provance &copy; 2015</p>
       </footer>

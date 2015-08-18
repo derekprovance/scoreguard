@@ -17,3 +17,7 @@
  /*
   *= require jquery-ui
   */
+
+  body {
+    background: #f6f6f5
+  }
