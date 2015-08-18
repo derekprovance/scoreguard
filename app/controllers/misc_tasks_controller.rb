@@ -2,7 +2,6 @@ class MiscTasksController < ApplicationController
   before_action :set_misc_task, only: [:show, :edit, :update, :destroy]
 
   # TODO - Need to implement method to reset the misc tasks to zero
-  # TODO - Need to implement some kind of category feature
 
   attr_accessor :current
 
@@ -10,6 +9,7 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks.json
   def index
     @misc_tasks = MiscTask.where(user_id: current_user.id)
+    @misc_task_categories = get_categories
   end
 
   # GET /misc_tasks/1
@@ -20,10 +20,12 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks/new
   def new
     @misc_tasks = MiscTask.new
+    @misc_task_categories = get_categories
   end
 
   # GET /misc_tasks/1/edit
   def edit
+    @misc_task_categories = get_categories
   end
 
   # POST /misc_tasks
@@ -68,6 +70,10 @@ class MiscTasksController < ApplicationController
   end
 
   private
+  def get_categories
+    MiscTask.where(user_id: current_user.id).select{|u| u.category }.collect{ |u| u.category }.uniq.sort_by{ |e| e.downcase }
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_misc_task
     @misc_tasks = MiscTask.find(params[:id])
@@ -75,6 +81,6 @@ class MiscTasksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def misc_task_params
-    params.require(:misc_task).permit(:name, :total_points, :actual_points, :description, :weight)
+    params.require(:misc_task).permit(:name, :total_points, :actual_points, :description, :weight, :category)
   end
 end
