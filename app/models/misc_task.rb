@@ -4,5 +4,4 @@ class MiscTask < ActiveRecord::Base
   validates :name, presence: true
   validates :actual_points, presence: true
   validates :total_points, presence: true
-  validates :weight, presence: true
 end

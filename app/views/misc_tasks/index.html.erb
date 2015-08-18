@@ -4,9 +4,11 @@
   <h3><%= category %></h3>
   <div class="row">
     <% @misc_tasks.select{ |t| t.category == category }.each do |task| %>
+      <% task_gpa = ((task.actual_points.to_f / task.total_points)*100).round(2) %>
+      
       <div class="col-sm-4 col-md-3">
-        <div class="panel panel-default">
-          <div class="panel-heading"><b><%= task.name %></b> (<%= task.actual_points %>/<%= task.total_points %>)
+        <div id="gpa_panel" class="panel panel-default">
+          <div class="panel-heading"><b><%= task.name %></b> (<%= task.actual_points %>/<%= task.total_points %>) <%= task_gpa %>%
             <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-sm', :style => 'float: right' do %>
               <i class="fa fa-times fa-lg"></i>
             <% end %><div class="clearfix"></div>

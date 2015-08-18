@@ -6,18 +6,21 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :earned_points %>*<br>
-    <%= f.number_field :actual_points, :class => "form-control" %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.label :earned_points %>*<br>
+        <%= f.number_field :actual_points, :class => "form-control" %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.label :total_points %>*<br>
+        <%= f.number_field :total_points, :class => "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :total_points %>*<br>
-    <%= f.number_field :total_points, :class => "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :weight %>*<br>
-    <%= f.number_field :weight, :class => "form-control" %>
+    <%= f.label :weight %><br>
+    <%= f.select :weight, (1..5), {}, {:class => 'form-control' } %>
   </div>
 
   <div class="form-group">
@@ -29,7 +32,7 @@
     <%= f.label :category %><br>
     <div class="row">
       <div class="col-sm-6">
-        <% @misc_task_categories = [] if @misc_task_categories.nil? %> 
+        <% @misc_task_categories = [] if @misc_task_categories.nil? %>
         <%= f.select :category, options_for_select(@misc_task_categories.select{ |t| t.present? }), {:include_blank => "Please select"}, {:class => 'category_select form-control' } %>
       </div>
       <div class="col-sm-6">
