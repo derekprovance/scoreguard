@@ -72,11 +72,15 @@ class GpaCalculator < ApplicationController
   end
 
   def calculate_total_earned_points
-    @current_grade.trello_earned_points + @current_grade.calendar_earned_points + @current_grade.misc_earned_points
+    (@current_grade.trello_earned_points + @current_grade.calendar_earned_points + @current_grade.misc_earned_points) - calculate_calendar_penalty
   end
 
   def calculate_total_points
     @current_grade.trello_total_points + @current_grade.calendar_total_points + @current_grade.misc_total_points
+  end
+
+  def calculate_calendar_penalty
+    ((calculate_total_points*0.2)/3) * (@current_grade.calendar_total_points - 6)
   end
 
   def calculate_grade_percentage

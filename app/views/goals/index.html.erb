@@ -15,13 +15,14 @@
         <td>[W:<%= goal.weight %>]</td>
         <td><%= goal.name %></td>
         <td><%= goal.starts_at %></td>
-        <td><%= link_to 'Show', goal %></td>
         <td><%= link_to 'Edit', edit_goal_path(goal) %></td>
         <td><%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
-</table><br />
+</table>
+
+<br />
 
 <%= month_calendar table: {class: "table table-bordered"}, tr: {class: "calendar-row"}, td: {class: "day"}, events: @goals do |date, meetings| %>
   <%= date %>
@@ -35,4 +36,4 @@
 
 <br>
 
-<%= link_to 'New Goal', new_goal_path %>
+<%= link_to 'New Goal', new_goal_path, :class => 'btn btn-default' %>
