@@ -2,6 +2,7 @@ class MiscTasksController < ApplicationController
   before_action :set_misc_task, only: [:show, :edit, :update, :destroy]
 
   # TODO - Need to implement method to reset the misc tasks to zero
+  # TODO - Need to add to mass edit category
 
   attr_accessor :current
 
@@ -15,6 +16,28 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks/1
   # GET /misc_tasks/1.json
   def show
+  end
+
+  # GET /misc_tasks/1/add
+  def add
+    task = MiscTask.where(id: params['id']).first
+    task.actual_points += 1
+    respond_to do |format|
+      if task.save
+        format.html { redirect_to '/misc_tasks', notice: "#{task.name} was successfully incremented." }
+      else
+        format.json { render json: @misc_task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # GET /misc_tasks/0/reset_all
+  def reset_all
+    tasks = MiscTask.where(user_id: current_user.id).update_all("actual_points = 0")
+
+    respond_to do |format|
+      format.html { redirect_to '/misc_tasks', notice: 'All tasks have been reset.' }
+    end
   end
 
   # GET /misc_tasks/new
@@ -76,7 +99,7 @@ class MiscTasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_misc_task
-    @misc_tasks = MiscTask.find(params[:id])
+    @misc_tasks = MiscTask.find(params[:id]) if params[:id].is_a? Numeric
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

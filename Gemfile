@@ -19,6 +19,8 @@ gem 'google_calendar'
 gem 'devise'
 gem "passenger"
 
+gem "chartkick"
+
 gem "therubyracer"
 gem "less-rails"
 gem "sprockets"

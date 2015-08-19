@@ -2,6 +2,8 @@ class GpaCalculator < ApplicationController
 
   attr_accessor :total_points, :earned_points, :current_grade
 
+  # TODO - Need to store actual points in addition to weighted points
+
   def initialize(current_user)
     @grades ||= Grade.new
 
@@ -56,7 +58,6 @@ class GpaCalculator < ApplicationController
     api.get_last_updated + 15.minutes < Time.now.in_time_zone("UTC") || force == true
   end
 
-  # TODO - Need to store actual points in addition to weighted points
   def update_calendar
     start_date = Date.current.beginning_of_week
     current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+6.days).where(missed: false).where(user_id: current_user.id).sum(:weight)
@@ -72,15 +73,11 @@ class GpaCalculator < ApplicationController
   end
 
   def calculate_total_earned_points
-    (@current_grade.trello_earned_points + @current_grade.calendar_earned_points + @current_grade.misc_earned_points) - calculate_calendar_penalty
+    (@current_grade.trello_earned_points + @current_grade.calendar_earned_points + @current_grade.misc_earned_points)
   end
 
   def calculate_total_points
     @current_grade.trello_total_points + @current_grade.calendar_total_points + @current_grade.misc_total_points
-  end
-
-  def calculate_calendar_penalty
-    ((calculate_total_points*0.2)/3) * (@current_grade.calendar_total_points - 6)
   end
 
   def calculate_grade_percentage

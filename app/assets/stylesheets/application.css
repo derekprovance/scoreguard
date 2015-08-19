@@ -21,3 +21,7 @@
   body {
     background: #f6f6f5
   }
+
+  .table-bordered {
+    background-color: white;
+  }

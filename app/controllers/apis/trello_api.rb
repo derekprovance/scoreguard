@@ -21,8 +21,9 @@ class Apis::TrelloApi
 
   def get_total_value
     get_boards
-    total_values = card_points(@goals)
-    total_values[:easy] + total_values[:medium] + total_values[:hard] + total_values[:bonus]
+    goal_values = card_points(@goals)
+    earned_values = card_points(@accomplished)
+    goal_values[:easy] + earned_values[:easy] + goal_values[:medium] + earned_values[:medium] + goal_values[:hard] + earned_values[:hard]
   end
 
   def get_earned_value
@@ -83,3 +84,4 @@ class Apis::TrelloApi
   end
 
 end
+#
