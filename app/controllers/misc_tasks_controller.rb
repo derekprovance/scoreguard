@@ -99,7 +99,7 @@ class MiscTasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_misc_task
-    @misc_tasks = MiscTask.find(params[:id]) if params[:id].is_a? Numeric
+    @misc_tasks = MiscTask.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
