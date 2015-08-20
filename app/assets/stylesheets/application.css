@@ -25,3 +25,16 @@
   .table-bordered {
     background-color: white;
   }
+
+  .navbar-default {
+    background-color: white;
+  }
+
+  .well {
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+  }
+
+  .panel-default .panel-heading {
+    background-color: #EAEAEA;
+  }
