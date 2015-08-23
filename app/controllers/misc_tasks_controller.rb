@@ -1,7 +1,6 @@
 class MiscTasksController < ApplicationController
   before_action :set_misc_task, only: [:show, :edit, :update, :destroy]
 
-  # TODO - Need to implement method to reset the misc tasks to zero
   # TODO - Need to add to mass edit category
 
   attr_accessor :current
@@ -28,15 +27,6 @@ class MiscTasksController < ApplicationController
       else
         format.json { render json: @misc_task.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # GET /misc_tasks/0/reset_all
-  def reset_all
-    tasks = MiscTask.where(user_id: current_user.id).update_all("actual_points = 0")
-
-    respond_to do |format|
-      format.html { redirect_to '/misc_tasks', notice: 'All tasks have been reset.' }
     end
   end
 

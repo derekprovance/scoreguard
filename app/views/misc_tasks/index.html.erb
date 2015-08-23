@@ -1,4 +1,4 @@
-<h1>Misc Tasks</h1>
+<h1>Weekly Tasks</h1>
 
 <% @misc_task_categories.each do |category| %>
   <h3><%= category %></h3>
@@ -28,5 +28,3 @@
 <%= link_to '/misc_tasks/new', :class => 'btn btn-default' do %>
   Add Task <span class="fa fa-plus" aria-hidden="true"></span>
 <% end %>
-
-<%= link_to 'Reset Tasks', "/misc_tasks/0/reset_all", :class => 'btn btn-default' %>

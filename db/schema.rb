@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818013136) do
+ActiveRecord::Schema.define(version: 20150823170837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,11 +38,8 @@ ActiveRecord::Schema.define(version: 20150818013136) do
 
   create_table "grades", force: :cascade do |t|
     t.date     "created_on"
-    t.decimal  "score"
-    t.integer  "goal"
     t.integer  "earned_points"
     t.integer  "total_points"
-    t.string   "comments"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "bonus_points"
@@ -54,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150818013136) do
     t.integer  "user_id"
     t.integer  "misc_earned_points"
     t.integer  "misc_total_points"
+    t.json     "misc_tasks"
   end
 
   create_table "misc_tasks", force: :cascade do |t|
@@ -66,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150818013136) do
     t.datetime "updated_at",    null: false
     t.boolean  "active"
     t.integer  "user_id"
-    t.string   "category"
+    t.string   "category",      null: false
   end
 
   create_table "users", force: :cascade do |t|

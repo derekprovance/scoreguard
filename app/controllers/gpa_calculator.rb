@@ -2,12 +2,12 @@ class GpaCalculator < ApplicationController
 
   attr_accessor :total_points, :earned_points, :current_grade
 
-  # TODO - Need to store actual points in addition to weighted points
-
   def initialize(current_user)
     @grades ||= Grade.new
 
     @current_grade = @grades.obtain_grade_points(current_user)
+    @prev_grade = get_last_grades_record(current_user)
+
     @current_user = current_user
 
     # Update the different APIs
@@ -67,6 +67,11 @@ class GpaCalculator < ApplicationController
 
   def update_misc
     start_date = Date.current.beginning_of_week
+    if reset_misc_tasks?
+      save_old_misc_tasks
+      reset_misc_tasks
+    end
+
     current_grade.misc_earned_points = MiscTask.where(user_id: current_user.id).map{ |misc| misc.actual_points * misc.weight }.sum
     current_grade.misc_total_points = MiscTask.where(user_id: current_user.id).map{ |misc| misc.total_points * misc.weight }.sum
     current_grade.save!
@@ -82,5 +87,34 @@ class GpaCalculator < ApplicationController
 
   def calculate_grade_percentage
     ((calculate_total_earned_points / calculate_total_points.to_f) * 100).round(2)
+  end
+
+  def reset_misc_tasks?
+    (@current_grade.misc_earned_points.nil? || @current_grade.misc_total_points.nil?) && (@prev_grade.created_on.beginning_of_week < Date.today.beginning_of_week)
+  end
+
+  def reset_misc_tasks
+    MiscTask.where(user_id: current_user.id).update_all("actual_points = 0")
+  end
+
+  def save_old_misc_tasks
+    old_tasks = {}
+
+    all_tasks = MiscTask.where(user_id: current_user.id)
+    all_tasks.each do |task|
+      old_tasks[task.name] = {
+        'actual' => task.actual_points,
+        'total' => task.total_points,
+        'description' => task.description,
+        'percentage' => ((task.actual_points/task.total_points.to_f)*100).round(2)
+      }
+    end
+
+    @prev_grade.misc_tasks = old_tasks.to_json
+    @prev_grade.save!
+  end
+
+  def get_last_grades_record(current_user)
+    Grade.where(user_id: current_user.id).order("created_on DESC").limit(2)[1]
   end
 end

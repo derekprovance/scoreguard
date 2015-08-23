@@ -38,3 +38,12 @@
   .panel-default .panel-heading {
     background-color: #EAEAEA;
   }
+
+  .dashboard-stats:hover {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .dashboard-stats:visited {
+    color: #000;
+  }
