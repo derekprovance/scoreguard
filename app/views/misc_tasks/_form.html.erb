@@ -9,11 +9,14 @@
     <div class="row">
       <div class="col-sm-6">
         <%= f.label :days_accomplished %>*<br>
-        <%= f.select :actual_points, (0..7), {}, {:class => 'form-control' } %>
+        <% @misc_tasks.total_points = 7 if @misc_tasks.total_points.nil? %>
+        <%= f.select :actual_points, (1..@misc_tasks.total_points), {}, {:class => 'earned-points form-control' } %>
+        <input type="hidden" value="<%= @misc_tasks.actual_points %>" class="earned-points-value" />
       </div>
       <div class="col-sm-6">
         <%= f.label :total_days %>*<br>
-        <%= f.select :total_points, (1..7), {}, {:class => 'form-control' } %>
+        <%= f.select :total_points, (1..7), {}, {:class => 'total-points form-control' } %>
+        <input type="hidden" value="<%= @misc_tasks.total_points %>" class="total-points-value" />
       </div>
     </div>
   </div>
@@ -55,6 +58,24 @@
     } else {
       $('.category_add').hide();
       $('.category_add').val($(this).val());
+    }
+  });
+
+  var earned_points = $('.earned-points');
+  var original_earned_points = $('.earned-points-value');
+  var total_points = $('.total-points');
+
+  total_points.on('change', function() {
+    earned_points.empty();
+    $.each(generate_select_array(total_points.val()), function(value,key) {
+    earned_points.append($("<option></option>")
+       .attr("value", value).text(key));
+    });
+
+    if(original_earned_points.val() <= total_points.val()) {
+      earned_points.val(original_earned_points.val());
+    } else {
+      earned_points.val(1);
     }
   });
 </script>
