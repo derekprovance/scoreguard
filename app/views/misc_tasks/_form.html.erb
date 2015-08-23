@@ -72,7 +72,7 @@
        .attr("value", value).text(key));
     });
 
-    if(original_earned_points.val() <= total_points.val()) {
+    if((original_earned_points.val() <= total_points.val()) && original_earned_points.val() != '') {
       earned_points.val(original_earned_points.val());
     } else {
       earned_points.val(1);
