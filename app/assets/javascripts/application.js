@@ -29,7 +29,7 @@ function get_gpa(gpa) {
 
 function generate_select_array(max) {
   var b = {};
-  for (var i = 1; i <= max; i++) {
+  for (var i = 0; i <= max; i++) {
     b[i] = i
   }
   return b;

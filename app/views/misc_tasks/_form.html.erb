@@ -10,7 +10,7 @@
       <div class="col-sm-6">
         <%= f.label :days_accomplished %>*<br>
         <% @misc_tasks.total_points = 7 if @misc_tasks.total_points.nil? %>
-        <%= f.select :actual_points, (1..@misc_tasks.total_points), {}, {:class => 'earned-points form-control' } %>
+        <%= f.select :actual_points, (0..@misc_tasks.total_points), {}, {:class => 'earned-points form-control' } %>
         <input type="hidden" value="<%= @misc_tasks.actual_points %>" class="earned-points-value" />
       </div>
       <div class="col-sm-6">

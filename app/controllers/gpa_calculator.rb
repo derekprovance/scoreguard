@@ -90,6 +90,7 @@ class GpaCalculator < ApplicationController
   end
 
   def reset_misc_tasks?
+    return false if @prev_grade.nil?
     (@current_grade.misc_earned_points.nil? || @current_grade.misc_total_points.nil?) && (@prev_grade.created_on.beginning_of_week < Date.today.beginning_of_week)
   end
 
