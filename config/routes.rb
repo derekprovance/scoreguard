@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   root 'main#index'
 
   get 'misc_tasks/:id/add' => 'misc_tasks#add'
+  get 'misc_tasks/:cat/edit_categories' => 'misc_tasks#edit_categories'
+  post 'misc_tasks/:cat/edit_categories' => 'misc_tasks#edit_all_categories'
 
-  # get 'misc_tasks/increment' => 'misc_tasks#increment'
   # get 'misc_tasks/create' => 'misc_tasks#create'
 
   # Example of regular route:

@@ -1,8 +1,6 @@
 class MiscTasksController < ApplicationController
   before_action :set_misc_task, only: [:show, :edit, :update, :destroy]
 
-  # TODO - Need to add to mass edit category
-
   attr_accessor :current
 
   # GET /misc_tasks
@@ -15,6 +13,29 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks/1
   # GET /misc_tasks/1.json
   def show
+  end
+
+  def edit_categories
+    @misc_task_categories = ""
+  end
+
+  def edit_all_categories
+    tasks = MiscTask.where(user_id: current_user.id).where(category: params['cat'])
+
+    tasks.each do |task|
+      task.category = params['category']
+      task.save!
+    end
+
+    respond_to do |format|
+      # if @misc_tasks.save
+        format.html { redirect_to '/misc_tasks', notice: "#{params['cat']} was successfully changed." }
+        format.json { render :show, status: :created, location: @misc_task }
+      # else
+      #   format.html { render :new }
+      #   format.json { render json: @misc_task.errors, status: :unprocessable_entity }
+      # end
+    end
   end
 
   # GET /misc_tasks/1/add
