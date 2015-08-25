@@ -47,3 +47,16 @@
   .dashboard-stats:visited {
     color: #000;
   }
+
+  .category-header {
+    text-decoration: none;
+    color: #777;
+    font-style: bold;
+    font-size: 1.8em;
+  }
+
+  .category-header:hover {
+    text-decoration: none;
+    background-color: inherit;
+    color: black;
+  }
