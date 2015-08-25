@@ -8,7 +8,7 @@ class GoalsController < ApplicationController
   def index
     start_date = Date.current.beginning_of_week
     @goals = Goal.where(user_id: current_user.id)
-    @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days)
+    @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days).order('starts_at ASC')
   end
 
   # GET /goals/1
@@ -34,7 +34,7 @@ class GoalsController < ApplicationController
 
     respond_to do |format|
       if @goal.save
-        format.html { redirect_to @goal, notice: 'Goal was successfully updated.'}
+        format.html { redirect_to goals_url, notice: 'Goal was successfully updated.'}
         format.json { render :show, status: :created, location: @goal }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class GoalsController < ApplicationController
   def update
     respond_to do |format|
       if @goal.update(goal_params)
-        format.html { redirect_to @goal, notice: 'Goal was successfully updated.' }
+        format.html { redirect_to goals_url, notice: 'Goal was successfully updated.' }
         format.json { render :show, status: :ok, location: @goal }
       else
         format.html { render :edit }
