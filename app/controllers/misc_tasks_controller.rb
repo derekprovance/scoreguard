@@ -28,13 +28,8 @@ class MiscTasksController < ApplicationController
     end
 
     respond_to do |format|
-      # if @misc_tasks.save
-        format.html { redirect_to '/misc_tasks', notice: "#{params['cat']} was successfully changed." }
-        format.json { render :show, status: :created, location: @misc_task }
-      # else
-      #   format.html { render :new }
-      #   format.json { render json: @misc_task.errors, status: :unprocessable_entity }
-      # end
+      format.html { redirect_to '/misc_tasks', notice: "#{params['cat']} was successfully changed." }
+      format.json { render :show, status: :created, location: @misc_task }
     end
   end
 
