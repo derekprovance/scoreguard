@@ -1,0 +1,17 @@
+<div class="col-sm-4 col-md-3">
+  <div id="gpa_panel" class="panel panel-default">
+    <div class="panel-heading"><b><%= task.name %></b> <%= task.starts_at.strftime('%A') %>
+      <% if task.attended %>
+        <i class="fa fa-calendar-check-o"></i>yes
+      <% else %>
+        <i class="fa fa-calendar-times-o"></i>no
+      <% end %>
+    </div>
+    <div class="panel-body">
+      <%= link_to 'Edit', "/goals/#{task.id}/edit", :class => 'btn btn-default btn-sm' %>
+      <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-sm' do %>
+      <% end %>
+      <div style="float: right"><%= task.weight_name %></div>
+    </div>
+  </div>
+</div>

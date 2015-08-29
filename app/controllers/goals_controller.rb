@@ -19,10 +19,12 @@ class GoalsController < ApplicationController
   # GET /goals/new
   def new
     @goal = Goal.new
+    @task_categories = get_categories
   end
 
   # GET /goals/1/edit
   def edit
+    @task_categories = get_categories
   end
 
   # POST /goals
@@ -34,7 +36,7 @@ class GoalsController < ApplicationController
 
     respond_to do |format|
       if @goal.save
-        format.html { redirect_to goals_url, notice: 'Goal was successfully updated.'}
+        format.html { redirect_to '/misc_tasks', notice: 'Goal was successfully updated.'}
         format.json { render :show, status: :created, location: @goal }
       else
         format.html { render :new }
@@ -48,7 +50,7 @@ class GoalsController < ApplicationController
   def update
     respond_to do |format|
       if @goal.update(goal_params)
-        format.html { redirect_to goals_url, notice: 'Goal was successfully updated.' }
+        format.html { redirect_to '/misc_tasks', notice: 'Goal was successfully updated.' }
         format.json { render :show, status: :ok, location: @goal }
       else
         format.html { render :edit }
@@ -62,12 +64,16 @@ class GoalsController < ApplicationController
   def destroy
     @goal.destroy
     respond_to do |format|
-      format.html { redirect_to goals_url, notice: 'Goal was successfully destroyed.' }
+      format.html { redirect_to '/misc_tasks', notice: 'Goal was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+    def get_categories
+      MiscTask.joins("LEFT OUTER JOIN goals ON misc_tasks.id = goals.user_id").where(user_id: current_user.id).select{|u| u.category }.collect{ |u| u.category }.uniq.sort_by{ |e| e.downcase }.to_a
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_goal
       @goal = Goal.find(params[:id])
@@ -75,6 +81,6 @@ class GoalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_params
-      params.require(:goal).permit(:name, :weight, :missed, :starts_at)
+      params.require(:goal).permit(:name, :weight, :attended, :category, :starts_at)
     end
 end

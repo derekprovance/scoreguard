@@ -30906,3 +30906,11 @@ function get_gpa(gpa) {
     $('#gpa_panel').addClass('panel-success');
   }
 }
+
+function generate_select_array(max) {
+  var b = {};
+  for (var i = 0; i <= max; i++) {
+    b[i] = i
+  }
+  return b;
+}

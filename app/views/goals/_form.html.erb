@@ -25,7 +25,7 @@
     <div class="form-group">
       <div class="checkbox">
         <label>
-          <%= f.check_box :missed %> Missed
+          <%= f.check_box :attended %> Attended?
         </label>
       </div>
     </div>
@@ -36,6 +36,19 @@
     <%= f.text_field :starts_at, :class => "form-control datepicker" %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :category %><br>
+    <div class="row">
+      <div class="col-sm-6">
+        <% @task_categories = [] if @task_categories.nil? %>
+        <%= f.select :category, options_for_select(@task_categories.select{ |t| t.present? }), {:include_blank => "Please select"}, {:class => 'category_select form-control' } %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.text_field :category, :class => "category_add form-control", :placeholder => 'Add a category' %>
+      </div>
+    </div>
+  </div>
+
   <div class="actions">
     <%= f.submit :class => "btn btn-default" %>
     <%= link_to 'Back', goals_path, :class => "btn btn-default" %>
@@ -44,6 +57,34 @@
   <script>
     $(function() {
       $( ".datepicker" ).datepicker();
+    });
+
+    $('.category_select').on('change', function() {
+      if ($(this).val() == '') {
+        $('.category_add').show();
+        $('.category_add').val('');
+      } else {
+        $('.category_add').hide();
+        $('.category_add').val($(this).val());
+      }
+    });
+
+    var earned_points = $('.earned-points');
+    var original_earned_points = $('.earned-points-value');
+    var total_points = $('.total-points');
+
+    total_points.on('change', function() {
+      earned_points.empty();
+      $.each(generate_select_array(total_points.val()), function(value,key) {
+      earned_points.append($("<option></option>")
+         .attr("value", value).text(key));
+      });
+
+      if((original_earned_points.val() <= total_points.val()) && original_earned_points.val() != '') {
+        earned_points.val(original_earned_points.val());
+      } else {
+        earned_points.val(1);
+      }
     });
   </script>
 <% end %>

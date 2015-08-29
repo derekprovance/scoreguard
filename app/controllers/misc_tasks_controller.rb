@@ -6,8 +6,13 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks
   # GET /misc_tasks.json
   def index
-    @misc_tasks = MiscTask.where(user_id: current_user.id)
+    @gpa = GpaCalculator.new(current_user)
+    @goals = Goal.where(user_id: current_user.id).to_a
+
+    @misc_tasks = MiscTask.where(user_id: current_user.id).to_a
     @misc_task_categories = get_categories
+
+    @tasks = @misc_tasks + @goals
   end
 
   # GET /misc_tasks/1
@@ -50,6 +55,7 @@ class MiscTasksController < ApplicationController
   def new
     @misc_tasks = MiscTask.new
     @misc_task_categories = get_categories
+    @goal = Goal.new
   end
 
   # GET /misc_tasks/1/edit
@@ -99,8 +105,13 @@ class MiscTasksController < ApplicationController
   end
 
   private
+
+  def get_misc_task_percentage
+    format_nan_zero(((@gpa.current_grade.misc_earned_points / @gpa.current_grade.misc_total_points.to_f) * 100).round(2))
+  end
+
   def get_categories
-    MiscTask.where(user_id: current_user.id).select{|u| u.category }.collect{ |u| u.category }.uniq.sort_by{ |e| e.downcase }
+    MiscTask.joins("LEFT OUTER JOIN goals ON misc_tasks.id = goals.user_id").where(user_id: current_user.id).select{|u| u.category }.collect{ |u| u.category }.uniq.sort_by{ |e| e.downcase }.to_a
   end
 
   # Use callbacks to share common setup or constraints between actions.

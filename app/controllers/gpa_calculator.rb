@@ -60,7 +60,7 @@ class GpaCalculator < ApplicationController
 
   def update_calendar
     start_date = Date.current.beginning_of_week
-    current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+6.days).where(missed: false).where(user_id: current_user.id).sum(:weight)
+    current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+6.days).where(attended: true).where(user_id: current_user.id).sum(:weight)
     current_grade.calendar_total_points = Goal.where(starts_at: start_date..start_date+6.days).where(user_id: current_user.id).sum(:weight)
     current_grade.save!
   end

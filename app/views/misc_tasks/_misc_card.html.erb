@@ -1,0 +1,23 @@
+<% task_gpa = ((task.actual_points.to_f / task.total_points)*100).round(2) %>
+
+<div class="col-sm-4 col-md-3">
+  <div id="gpa_panel" class="panel panel-default">
+    <div class="panel-heading"><b><%= task.name %></b> (<%= task.actual_points %>/<%= task.total_points %>) <%= task_gpa %>%
+      <% if task.actual_points < task.total_points %>
+        <%= link_to "/misc_tasks/#{task.id}/add", :class => 'btn btn-default btn-sm', :style => 'float: right' do %>
+          <i class="fa fa-plus"></i></span>
+        <% end %><div class="clearfix"></div>
+      <% elsif %>
+        <button class="btn btn-default btn-sm" style="float: right" disabled><i class="fa fa-plus"></i></button>
+        <div class="clearfix"></div>
+      <% end %>
+    </div>
+    <div class="panel-body">
+      <%= link_to 'Edit', "/misc_tasks/#{task.id}/edit", :class => 'btn btn-default btn-sm' %>
+      <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-sm' do %>
+        <i class="fa fa-times fa-lg"></i>
+      <% end %>
+      <div style="float: right"><%= task.weight_name %></div>
+    </div>
+  </div>
+</div>

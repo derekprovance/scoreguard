@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'main#index'
+  root 'misc_tasks#index'
 
   get 'misc_tasks/:id/add' => 'misc_tasks#add'
   get 'misc_tasks/:cat/edit_categories' => 'misc_tasks#edit_categories'

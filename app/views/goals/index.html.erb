@@ -13,7 +13,7 @@
     <% @week_goals.each do |goal| %>
       <tr>
         <td>[W:<%= goal.weight %>]</td>
-        <td><%= goal.missed ? 'Missed' : '' %></td>
+        <td><%= goal.attended ? 'Attended' : '' %></td>
         <td><%= goal.name %></td>
         <td><%= goal.starts_at %></td>
         <td><%= link_to 'Edit', edit_goal_path(goal) %></td>

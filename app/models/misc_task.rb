@@ -1,4 +1,5 @@
 class MiscTask < ActiveRecord::Base
+  include ApplicationHelper
   belongs_to :user
 
   validates :name, presence: true
