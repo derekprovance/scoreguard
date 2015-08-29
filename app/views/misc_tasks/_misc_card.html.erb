@@ -2,7 +2,7 @@
 
 <div class="col-sm-4 col-md-3">
   <div id="gpa_panel" class="panel panel-default">
-    <div class="panel-heading"><b><%= task.name %></b> (<%= task.actual_points %>/<%= task.total_points %>) <%= task_gpa %>%
+    <div class="panel-heading"><i class="fa fa-tasks fg-lg"></i> <b><%= task.name %></b>
       <% if task.actual_points < task.total_points %>
         <%= link_to "/misc_tasks/#{task.id}/add", :class => 'btn btn-default btn-sm', :style => 'float: right' do %>
           <i class="fa fa-plus"></i></span>
@@ -17,7 +17,7 @@
       <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-sm' do %>
         <i class="fa fa-times fa-lg"></i>
       <% end %>
-      <div style="float: right"><%= task.weight_name %></div>
+      <div style="float: right">(<%= task.actual_points %>/<%= task.total_points %>) <%= task_gpa %>% <i class="fa fa-shield fa-lg" style="color: <%= task.weight_name %>"></i></div>
     </div>
   </div>
 </div>

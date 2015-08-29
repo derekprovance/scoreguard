@@ -1,17 +1,16 @@
 <div class="col-sm-4 col-md-3">
   <div id="gpa_panel" class="panel panel-default">
-    <div class="panel-heading"><b><%= task.name %></b> <%= task.starts_at.strftime('%A') %>
-      <% if task.attended %>
-        <i class="fa fa-calendar-check-o"></i>yes
-      <% else %>
-        <i class="fa fa-calendar-times-o"></i>no
-      <% end %>
+    <div class="panel-heading"><i class="fa fa-calendar fa-lg"></i> <b><%= task.name %></b>
+      <div class="card-status"><% if task.attended %>
+        <i class="fa fa-check fa-lg"></i>
+      <% end %></div><div class="clearfix"></div>
     </div>
     <div class="panel-body">
       <%= link_to 'Edit', "/goals/#{task.id}/edit", :class => 'btn btn-default btn-sm' %>
       <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-sm' do %>
+      <i class="fa fa-times"></i>
       <% end %>
-      <div style="float: right"><%= task.weight_name %></div>
+      <div style="float: right">Due: <%= task.starts_at.strftime('%A') %> <i class="fa fa-shield fa-lg" style="color: <%= task.weight_name %>"></i></div>
     </div>
   </div>
 </div>

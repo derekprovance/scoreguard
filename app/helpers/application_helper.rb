@@ -2,13 +2,13 @@ module ApplicationHelper
   def weight_name
     case weight
     when 1
-      "Easy"
+      "Green"
     when 2
-      "Medium"
+      "#00FF99"
     when 3
-      "Hard"
+      "Red"
     when 4
-      "Extreme"
+      "Black"
     else
       "Unknown"
     end

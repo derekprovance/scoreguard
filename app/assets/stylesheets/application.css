@@ -37,6 +37,7 @@
 
   .panel-default .panel-heading {
     background-color: #EAEAEA;
+    height: 50px;
   }
 
   .dashboard-stats:hover {
@@ -59,4 +60,9 @@
     text-decoration: none;
     background-color: inherit;
     color: black;
+  }
+
+  .card-status {
+    padding: 6px;
+    float: right;
   }
