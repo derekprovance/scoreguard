@@ -104,7 +104,24 @@ class MiscTasksController < ApplicationController
     end
   end
 
+  def time_left
+    today = Date.current
+    left = (today.end_of_week - today).to_i
+    if left > 0
+      remaining = left.to_s + (left == 1 ? " Day" : " Days")
+    elsif left == 0
+      remaining = hours_left_in_day.to_s + " Hours"
+    end
+    remaining
+  end
+
+  helper_method :time_left
+
   private
+
+  def hours_left_in_day
+    ((Time.now.end_of_day - Time.now) / 3600).round(2)
+  end
 
   def get_misc_task_percentage
     format_nan_zero(((@gpa.current_grade.misc_earned_points / @gpa.current_grade.misc_total_points.to_f) * 100).round(2))
