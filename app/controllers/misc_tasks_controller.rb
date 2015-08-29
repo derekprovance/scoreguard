@@ -10,7 +10,7 @@ class MiscTasksController < ApplicationController
     @goals = Goal.where(user_id: current_user.id).to_a
 
     @misc_tasks = MiscTask.where(user_id: current_user.id).to_a
-    @misc_task_categories = get_categories
+    @task_categories = get_categories
 
     @tasks = @misc_tasks + @goals
   end
@@ -21,7 +21,7 @@ class MiscTasksController < ApplicationController
   end
 
   def edit_categories
-    @misc_task_categories = ""
+    @task_categories = ""
   end
 
   def edit_all_categories
@@ -54,13 +54,13 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks/new
   def new
     @misc_tasks = MiscTask.new
-    @misc_task_categories = get_categories
+    @task_categories = get_categories
     @goal = Goal.new
   end
 
   # GET /misc_tasks/1/edit
   def edit
-    @misc_task_categories = get_categories
+    @task_categories = get_categories
   end
 
   # POST /misc_tasks

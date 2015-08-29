@@ -35,8 +35,8 @@
     <%= f.label :category %><br>
     <div class="row">
       <div class="col-sm-6">
-        <% @misc_task_categories = [] if @misc_task_categories.nil? %>
-        <%= f.select :category, options_for_select(@misc_task_categories.select{ |t| t.present? }), {:include_blank => "Please select"}, {:class => 'category_select form-control' } %>
+        <% @task_categories = [] if @task_categories.nil? %>
+        <%= f.select :category, options_for_select(@task_categories.select{ |t| t.present? }), {:include_blank => "Please select"}, {:class => 'category_select form-control' } %>
       </div>
       <div class="col-sm-6">
         <%= f.text_field :category, :class => "category_add form-control", :placeholder => 'Add a category' %>

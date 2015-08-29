@@ -1,13 +1,13 @@
 <div class="row">
-  <div class="col-sm-9">
+  <div class="col-sm-6">
     <div class="subpage-header">Tasks</div>
   </div>
-  <div class="col-sm-3">
-    Current Grade: <%= @gpa.calculate_grade_percentage %>%
+  <div class="col-sm-6">
+    <div class="subpage-header subpage-header-right">Grade: <%= @gpa.calculate_grade_percentage %>%</div>
   </div>
 </div>
 
-<% @misc_task_categories.each do |category| %>
+<% @task_categories.each do |category| %>
 
   <div class="row">
     <div class="col-sm-12">

@@ -52,7 +52,6 @@
   .category-header {
     text-decoration: none;
     color: #777;
-    font-style: bold;
     font-size: 1.8em;
   }
 
@@ -65,4 +64,13 @@
   .card-status {
     padding: 6px;
     float: right;
+  }
+
+  .subpage-header {
+    font-size: 1.8em;
+  }
+
+  .subpage-header-right {
+    text-align: right;
+    color: #666;
   }
