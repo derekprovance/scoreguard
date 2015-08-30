@@ -1,4 +1,5 @@
 class GpaCalculator < ApplicationController
+  require 'trello'
 
   attr_accessor :total_points, :earned_points, :current_grade
 
