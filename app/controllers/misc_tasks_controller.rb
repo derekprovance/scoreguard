@@ -120,7 +120,7 @@ class MiscTasksController < ApplicationController
   private
 
   def hours_left_in_day
-    ((Time.now.end_of_day - Time.now) / 3600).round(2)
+    ((Time.now.end_of_day - Time.now) / 3600).round(0)
   end
 
   def get_misc_task_percentage
