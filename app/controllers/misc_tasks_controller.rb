@@ -7,12 +7,15 @@ class MiscTasksController < ApplicationController
   # GET /misc_tasks.json
   def index
     @gpa = GpaCalculator.new(current_user)
+
+    start_date = Date.today.beginning_of_week
     @goals = Goal.where(user_id: current_user.id).to_a
+    @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days).order('starts_at ASC').to_a
 
     @misc_tasks = MiscTask.where(user_id: current_user.id).to_a
     @task_categories = get_categories
 
-    @tasks = @misc_tasks + @goals
+    @tasks = @misc_tasks + @week_goals
   end
 
   # GET /misc_tasks/1
