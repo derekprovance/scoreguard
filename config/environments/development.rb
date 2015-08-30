@@ -11,6 +11,7 @@ Rails.application.configure do
 
   # Devise Configurations
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.perform_deliveries = true
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

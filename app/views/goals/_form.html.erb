@@ -55,8 +55,12 @@
   </div>
 
   <script>
+    var dateToday = new Date();
     $(function() {
-      $( ".datepicker" ).datepicker();
+      $( ".datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd',
+        minDate: dateToday,
+      });
     });
 
     $('.category_select').on('change', function() {
