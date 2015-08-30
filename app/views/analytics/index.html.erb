@@ -1,1 +1,47 @@
-<p>Analytics coming soon...</p>
+<div class="row">
+  <div class="col-lg-9">
+    <h3>Current Analytics</h3><br />
+    <div class="row">
+      <div class="col-md-4">
+        <div class="well">Trello: <%= @gpa.current_grade.trello_earned_points %> / <%= @gpa.current_grade.trello_total_points %> (<%= @trello_percentage %>%)
+        </div>
+      </div>
+      <div class="col-md-4">
+        <a class="dashboard-stats" href="/goals">
+          <div class="well">Calendar: <%= @gpa.current_grade.calendar_earned_points %> / <%= @gpa.current_grade.calendar_total_points %> (<%= @calendar_percentage %>%)</div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a class="dashboard-stats" href="/misc_tasks">
+          <div class="well">Tasks: <%= @gpa.current_grade.misc_earned_points %> / <%= @gpa.current_grade.misc_total_points %> (<%= @misc_task_percentage %>%)</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="row"><br />
+      <div id='gpa_panel' class="panel">
+        <div class="panel-heading">Current GPA</div>
+        <div class="panel-body">
+          GPA: <%= @gpa.calculate_grade_percentage %>%<br />
+          Remaining: <%= @misc_tasks.time_left %>
+          <input id="active_gpa" class="hide" value="<%= @gpa.calculate_grade_percentage %>" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Past Analytics</h3>
+    <%= line_chart @grade_analytics.map{|name, grade|
+      {name: name, data: grade}
+    } %>
+  </div>
+</div>
+
+<script>
+  get_gpa($('#active_gpa').val());
+</script>

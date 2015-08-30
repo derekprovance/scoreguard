@@ -59,14 +59,14 @@ class GpaCalculator < ApplicationController
   end
 
   def update_calendar
-    start_date = Date.current.beginning_of_week
+    start_date = Date.today.beginning_of_week
     current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+6.days).where(attended: true).where(user_id: current_user.id).sum(:weight)
     current_grade.calendar_total_points = Goal.where(starts_at: start_date..start_date+6.days).where(user_id: current_user.id).sum(:weight)
     current_grade.save!
   end
 
   def update_misc
-    start_date = Date.current.beginning_of_week
+    start_date = Date.today.beginning_of_week
     if reset_misc_tasks?
       save_old_misc_tasks
       reset_misc_tasks
@@ -78,11 +78,17 @@ class GpaCalculator < ApplicationController
   end
 
   def calculate_total_earned_points
-    (@current_grade.trello_earned_points + @current_grade.calendar_earned_points + @current_grade.misc_earned_points)
+    earned = (@current_grade.trello_earned_points + @current_grade.calendar_earned_points + @current_grade.misc_earned_points)
+    @current_grade.earned_points = earned
+    @current_grade.save!
+    earned
   end
 
   def calculate_total_points
-    @current_grade.trello_total_points + @current_grade.calendar_total_points + @current_grade.misc_total_points
+    total = @current_grade.trello_total_points + @current_grade.calendar_total_points + @current_grade.misc_total_points
+    @current_grade.total_points = total
+    @current_grade.save!
+    total
   end
 
   def calculate_grade_percentage

@@ -6,7 +6,7 @@ class GoalsController < ApplicationController
   # GET /goals
   # GET /goals.json
   def index
-    start_date = Date.current.beginning_of_week
+    start_date = Date.today.beginning_of_week
     @goals = Goal.where(user_id: current_user.id)
     @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days).order('starts_at ASC')
   end
@@ -81,6 +81,6 @@ class GoalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_params
-      params.require(:goal).permit(:name, :weight, :attended, :category, :starts_at)
+      params.require(:goal).permit(:name, :weight, :starts_at, :attended, :category)
     end
 end

@@ -20,6 +20,7 @@ gem 'devise'
 gem "passenger"
 
 gem "chartkick"
+gem 'groupdate'
 
 gem "therubyracer"
 gem "less-rails"

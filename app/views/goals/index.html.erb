@@ -1,36 +1,17 @@
-<h1>Listing Events</h1>
+<h2>Tasks with Due Date</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Starts at</th>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @week_goals.each do |goal| %>
-      <tr>
-        <td>[W:<%= goal.weight %>]</td>
-        <td><%= goal.attended ? 'Attended' : '' %></td>
-        <td><%= goal.name %></td>
-        <td><%= goal.starts_at %></td>
-        <td><%= link_to 'Edit', edit_goal_path(goal) %></td>
-        <td><%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br />
-
-<%= month_calendar table: {class: "table table-bordered"}, tr: {class: "calendar-row"}, td: {class: "day"}, events: @goals do |date, meetings| %>
+<%= week_calendar number_of_weeks: 1, table: {class: "table table-bordered"}, tr: {class: "calendar-row"}, td: {class: "day"}, events: @goals do |date, meetings| %>
   <%= date %>
 
   <% meetings.each do |meeting| %>
     <div>
-      <%= meeting.name %>
+      <i><%= meeting.name %></i>
     </div>
   <% end %>
 <% end %>
+
+<div class="row">
+  <% @week_goals.each do |task| %>
+    <%= render partial: "/misc_tasks/calendar_card", locals: {task: task} %>
+  <% end %>
+</div>

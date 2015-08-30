@@ -105,7 +105,7 @@ class MiscTasksController < ApplicationController
   end
 
   def time_left
-    today = Date.current
+    today = Date.today
     left = (today.end_of_week - today).to_i
     if left > 0
       remaining = left.to_s + (left == 1 ? " Day" : " Days")
