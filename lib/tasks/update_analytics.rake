@@ -1,3 +1,5 @@
+require 'trello'
+
 namespace :update_analytics do
   desc "Updates all analytics per user"
   task all: :environment do
