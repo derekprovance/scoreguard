@@ -32,7 +32,6 @@ class GoalsController < ApplicationController
   def create
     @goal = Goal.new(goal_params)
     @goal.user_id = current_user.id
-    @goal.starts_at = Date.strptime(goal_params['starts_at'], '%m/%d/%Y') unless goal_params['starts_at'].empty?
 
     respond_to do |format|
       if @goal.save
