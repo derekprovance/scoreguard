@@ -60,14 +60,14 @@ class GpaCalculator < ApplicationController
   end
 
   def update_calendar
-    start_date = Date.today.beginning_of_week
+    start_date = Time.now.in_time_zone(@current_user.id).beginning_of_week
     current_grade.calendar_earned_points = Goal.where(starts_at: start_date..start_date+6.days).where(attended: true).where(user_id: current_user.id).sum(:weight)
     current_grade.calendar_total_points = Goal.where(starts_at: start_date..start_date+6.days).where(user_id: current_user.id).sum(:weight)
     current_grade.save!
   end
 
   def update_misc
-    start_date = Date.today.beginning_of_week
+    start_date = Time.now.in_time_zone(@current_user.id).beginning_of_week
     if reset_misc_tasks?
       save_old_misc_tasks
       reset_misc_tasks
@@ -98,7 +98,7 @@ class GpaCalculator < ApplicationController
 
   def reset_misc_tasks?
     return false if @prev_grade.nil?
-    (@current_grade.misc_earned_points.nil? || @current_grade.misc_total_points.nil?) && (@prev_grade.created_on.beginning_of_week < Date.today.beginning_of_week)
+    (@current_grade.misc_earned_points.nil? || @current_grade.misc_total_points.nil?) && (@prev_grade.created_on.beginning_of_week < Time.now.in_time_zone(@current_user.time_zone).beginning_of_week)
   end
 
   def reset_misc_tasks

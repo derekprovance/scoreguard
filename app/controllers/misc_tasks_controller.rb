@@ -8,7 +8,7 @@ class MiscTasksController < ApplicationController
   def index
     @gpa = GpaCalculator.new(current_user)
 
-    start_date = Date.today.beginning_of_week
+    start_date = Time.now.in_time_zone(current_user.time_zone).beginning_of_week
     @goals = Goal.where(user_id: current_user.id).to_a
     @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days).order('starts_at ASC').to_a
 
@@ -108,7 +108,7 @@ class MiscTasksController < ApplicationController
   end
 
   def time_left
-    today = Date.today
+    today = Time.now.in_time_zone(current_user.time_zone).to_date
     left = (today.end_of_week - today).to_i
     if left > 0
       remaining = left.to_s + (left == 1 ? " Day" : " Days")
@@ -123,7 +123,8 @@ class MiscTasksController < ApplicationController
   private
 
   def hours_left_in_day
-    ((Time.now.end_of_day - Time.now) / 3600).round(0)
+    current = Time.now.in_time_zone(current_user.time_zone)
+    ((current.end_of_day - current) / 3600).round(0)
   end
 
   def get_misc_task_percentage
