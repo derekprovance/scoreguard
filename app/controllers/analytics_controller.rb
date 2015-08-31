@@ -13,7 +13,7 @@ class AnalyticsController < ApplicationController
     populate_total_analytics
   end
 
-  def populate_total_analytics(date_range = Time.now.in_time_zone(current_user.time_zone)-5.day..Time.now.in_time_zone(user.time_zone))
+  def populate_total_analytics(date_range = Date.current-5.day..Date.current)
     grade = Grade.where(user_id: current_user.id).where(created_on: date_range)
     @grade_analytics = {}
     @grade_analytics['Total Points'] = grade.group_by_day(:created_at).sum(:total_points)

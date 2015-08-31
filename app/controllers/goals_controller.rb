@@ -6,7 +6,7 @@ class GoalsController < ApplicationController
   # GET /goals
   # GET /goals.json
   def index
-    start_date = Time.now.in_time_zone(current_user.time_zone).beginning_of_week
+    start_date = Date.today.beginning_of_week
     @goals = Goal.where(user_id: current_user.id)
     @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days).order('starts_at ASC')
   end

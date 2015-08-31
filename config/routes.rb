@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :goals
   resources :misc_tasks
   resources :analytics
@@ -7,8 +8,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'misc_tasks#index'
-
-  devise_for :users, :controllers => { registrations: 'registrations' }
 
   get 'misc_tasks/:id/add' => 'misc_tasks#add'
   get 'misc_tasks/:cat/edit_categories' => 'misc_tasks#edit_categories'
