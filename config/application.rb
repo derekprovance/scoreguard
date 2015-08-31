@@ -10,6 +10,9 @@ module Score
   class Application < Rails::Application
     config.less.paths << "#{Rails.root}/lib/less/protractor/stylesheets"
     config.less.compress = true
+
+    config.time_zone = 'Central Time (US & Canada)'
+    config.active_record.default_timezone = 'Central Time (US & Canada)'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
