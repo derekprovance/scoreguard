@@ -14,10 +14,22 @@ class AnalyticsController < ApplicationController
   end
 
   def populate_total_analytics(date_range = Date.current-5.day..Date.current)
-    grade = Grade.where(user_id: current_user.id).where(created_on: date_range)
+    grade = Grade.where(user_id: current_user.id).where(created_on: get_weeks)
     @grade_analytics = {}
-    @grade_analytics['Total Points'] = grade.group_by_day(:created_at).sum(:total_points)
-    @grade_analytics['Earned Points'] = grade.group_by_day(:created_at).sum(:earned_points)
+    @grade_analytics['Total Points'] = grade.group_by_week(:created_on, format: "%m %d %Y").sum(:total_points)
+    @grade_analytics['Earned Points'] = grade.group_by_week(:created_on, format: "%m %d %Y").sum(:earned_points)
+  end
+
+  def get_weeks(weeks_prev = 10) 
+    count = 0
+    weeks = []
+    current_week = Date.current.end_of_week
+    while (count <= weeks_prev) do 
+      weeks.push(current_week - (count*7).days)
+      count += 1
+    end
+    
+    weeks
   end
 
   def get_trello_percentage
