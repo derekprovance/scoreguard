@@ -102,13 +102,19 @@ class GpaCalculator < ApplicationController
   end
 
   def reset_misc_tasks
-    MiscTask.where(user_id: current_user.id).update_all("actual_points = 0")
+    start_date = @prev_grade.created_on.beginning_of_week
+    Goal.where(starts_at: start_date..start_date+6.days).where(repeat: true).each do |goal|
+      goal.starts_at = goal.starts_at + 7.days
+    end
+
+    MiscTask.where(user_id: current_user.id).where(repeat: false).where(disabled: false).update_all(disabled: true)
+    MiscTask.where(user_id: current_user.id).where(disabled: false).update_all("actual_points = 0")
   end
 
   def save_old_misc_tasks
     old_tasks = {}
 
-    all_tasks = MiscTask.where(user_id: current_user.id)
+    all_tasks = MiscTask.where(user_id: current_user.id).where(disabled: false)
     all_tasks.each do |task|
       old_tasks[task.name] = {
         'actual' => task.actual_points,

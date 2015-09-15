@@ -12,7 +12,7 @@ class MiscTasksController < ApplicationController
     @goals = Goal.where(user_id: current_user.id).to_a
     @week_goals = Goal.where(user_id: current_user.id).where(starts_at: start_date..start_date+6.days).order('starts_at ASC').to_a
 
-    @misc_tasks = MiscTask.where(user_id: current_user.id).to_a
+    @misc_tasks = MiscTask.where(user_id: current_user.id).where(disabled: false).to_a
     @task_categories = get_categories
 
     @tasks = @misc_tasks + @week_goals
@@ -141,6 +141,6 @@ class MiscTasksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def misc_task_params
-    params.require(:misc_task).permit(:name, :total_points, :actual_points, :description, :weight, :category)
+    params.require(:misc_task).permit(:name, :total_points, :actual_points, :description, :weight, :category, :repeat)
   end
 end
