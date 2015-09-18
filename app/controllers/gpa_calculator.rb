@@ -68,9 +68,9 @@ class GpaCalculator < ApplicationController
 
   def update_misc
     start_date = Date.today.beginning_of_week
-    if reset_misc_tasks?
+    if reset_tasks?
       save_old_misc_tasks
-      reset_misc_tasks
+      reset_tasks
     end
 
     current_grade.misc_earned_points = MiscTask.where(user_id: current_user.id).map{ |misc| misc.actual_points * misc.weight }.sum
@@ -96,15 +96,17 @@ class GpaCalculator < ApplicationController
     ((calculate_total_earned_points / calculate_total_points.to_f) * 100).round(2)
   end
 
-  def reset_misc_tasks?
+  def reset_tasks?
     return false if @prev_grade.nil?
     (@current_grade.misc_earned_points.nil? || @current_grade.misc_total_points.nil?) && (@prev_grade.created_on.beginning_of_week < Date.today.beginning_of_week)
   end
 
-  def reset_misc_tasks
+  def reset_tasks
     start_date = @prev_grade.created_on.beginning_of_week
     Goal.where(starts_at: start_date..start_date+6.days).where(repeat: true).each do |goal|
-      goal.starts_at = goal.starts_at + 7.days
+      new_goal = goal.dup
+      new_goal.starts_at = goal.starts_at + 7.days
+      new_goal.save!
     end
 
     MiscTask.where(user_id: current_user.id).where(repeat: false).where(disabled: false).update_all(disabled: true)

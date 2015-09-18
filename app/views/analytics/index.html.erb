@@ -24,7 +24,7 @@
       <div id='gpa_panel' class="panel">
         <div class="panel-heading">Current GPA</div>
         <div class="panel-body">
-          GPA: <%= @gpa.calculate_grade_percentage %>%<br />
+          Score: <%= @gpa.calculate_grade_percentage %>%<br />
           Remaining: <%= @misc_tasks.time_left %>
           <input id="active_gpa" class="hide" value="<%= @gpa.calculate_grade_percentage %>" />
         </div>
