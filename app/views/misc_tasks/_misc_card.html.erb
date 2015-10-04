@@ -1,6 +1,6 @@
 <% task_gpa = ((task.actual_points.to_f / task.total_points)*100).round(2) %>
 
-<div class="col-sm-4 col-md-3">
+<div class="col-sm-4 col-md-3 misc-task">
   <div id="gpa_panel" class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-tasks fg-lg"></i> <b><%= task.name %></b>
       <% if task.actual_points < task.total_points %>

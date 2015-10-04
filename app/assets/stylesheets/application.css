@@ -69,9 +69,33 @@
   .subpage-header {
     font-size: 1.8em;
     height: 30px;
+    color: #666;
+    padding-bottom: 40px
   }
 
   .subpage-header-right {
     text-align: right;
+    float: right;
     color: #666;
+    padding-left: 10px;
+  }
+
+  .tab-content {
+    background-color: #FBFBFB;
+    padding: 20px;
+    border: 1px solid #ddd;
+  }
+
+  .nav-tabs {
+    border: 0px;
+  }
+
+  .single-form-element {
+    background-color: #FBFBFB;
+    padding: 20px;
+    border: 1px solid #ddd;
+  }
+
+  #exTab2 > ul > li.active > a {
+    background-color: #FBFBFB;
   }

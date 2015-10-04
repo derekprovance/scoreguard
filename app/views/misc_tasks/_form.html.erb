@@ -8,7 +8,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-6">
-        <%= f.label :days_accomplished %>*<br>
+        <%= f.label :days_acc %>*<br>
         <% @misc_tasks.total_points = 7 if @misc_tasks.total_points.nil? %>
         <%= f.select :actual_points, (0..@misc_tasks.total_points), {}, {:class => 'earned-points form-control' } %>
         <input type="hidden" value="<%= @misc_tasks.actual_points %>" class="earned-points-value" />

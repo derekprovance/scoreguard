@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-9">
-    <h3>Current Analytics</h3><br />
+    <div class="subpage-header">Current Analytics</div>
     <div class="row">
       <div class="col-md-4">
         <div class="well">Trello: <%= @gpa.current_grade.trello_earned_points %> / <%= @gpa.current_grade.trello_total_points %> (<%= @trello_percentage %>%)
@@ -35,7 +35,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <h3>Past Analytics</h3>
+    <div class="subpage-header">Past Analytics</div>
     <%= line_chart @grade_analytics.map{|name, grade|
       {name: name, data: grade}
     } %>

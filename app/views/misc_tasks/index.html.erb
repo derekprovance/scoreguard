@@ -7,6 +7,12 @@
   </div>
 </div>
 
+<div class="btn-group" role="group" style="float: right" aria-label="...">
+  <button type="button" class="goal-filter btn btn-default"><i class="fa fa-calendar"></i></button>
+  <button type="button" class="calendar-filter btn btn-default"><i class="fa fa-tasks"></i></button>
+  <button type="button" class="filter-none btn btn-default"><i class="fa fa-circle-o"></i></button>
+</div>
+
 <% @task_categories.each do |category| %>
 
   <div class="row">
@@ -29,3 +35,45 @@
 <%= link_to '/misc_tasks/new', :class => 'btn btn-default' do %>
   Add Task <span class="fa fa-plus" aria-hidden="true"></span>
 <% end %>
+
+<script>
+  var filter = '<%= params['sort'] %>'
+
+  function show_misc_tasks() {
+    $('.goal').hide();
+    $('.misc-task').show();
+  }
+
+  function show_goal() {
+    $('.misc-task').hide();
+    $('.goal').show();
+  }
+
+  function show_all() {
+    $('.misc-task').show();
+    $('.goal').show();
+  }
+
+  //Oh this is so hackish! Stuck with the limitations of Ruby's deprecated view layer. Woah is me...
+  $('.goal-filter').on('click', function() {
+    show_goal();
+  });
+
+  $('.calendar-filter').on('click', function() {
+    show_misc_tasks();
+  });
+
+  $('.filter-none').on('click', function() {
+    show_all();
+  });
+  //End of dramatic speech
+
+  $('document').ready(function () {
+    if (filter == 'goal') {
+      show_goal();
+    } else if (filter == 'misc-tasks') {
+      show_misc_tasks();
+    }
+  });
+
+</script>

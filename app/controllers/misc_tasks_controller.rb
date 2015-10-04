@@ -45,6 +45,7 @@ class MiscTasksController < ApplicationController
   def add
     task = MiscTask.where(id: params['id']).first
     task.actual_points += 1
+    
     respond_to do |format|
       if task.save
         format.html { redirect_to '/misc_tasks', notice: "#{task.name} was successfully incremented." }
